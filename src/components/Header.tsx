@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, User, Bell, Search, Menu, X } from "lucide-react";
+import { Home, User, Bell, Search, Menu, X, MessageCircle, Play, Users } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.jpg";
 
@@ -30,10 +30,22 @@ const Header = () => {
               Explore
             </Button>
           </Link>
-          <Link to="/profile">
+          <Link to="/quids">
             <Button variant="ghost" className="gap-2">
-              <User className="h-4 w-4" />
-              Profile
+              <Play className="h-4 w-4" />
+              Quids
+            </Button>
+          </Link>
+          <Link to="/quddlebuddy">
+            <Button variant="ghost" className="gap-2">
+              <MessageCircle className="h-4 w-4" />
+              QuddleBuddy
+            </Button>
+          </Link>
+          <Link to="/pet-parent">
+            <Button variant="ghost" className="gap-2">
+              <Users className="h-4 w-4" />
+              Pet Parent
             </Button>
           </Link>
         </nav>
@@ -78,10 +90,22 @@ const Header = () => {
                 Explore
               </Button>
             </Link>
-            <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/quids" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="ghost" className="w-full justify-start gap-2">
-                <User className="h-4 w-4" />
-                Profile
+                <Play className="h-4 w-4" />
+                Quids
+              </Button>
+            </Link>
+            <Link to="/quddlebuddy" onClick={() => setMobileMenuOpen(false)}>
+              <Button variant="ghost" className="w-full justify-start gap-2">
+                <MessageCircle className="h-4 w-4" />
+                QuddleBuddy
+              </Button>
+            </Link>
+            <Link to="/pet-parent" onClick={() => setMobileMenuOpen(false)}>
+              <Button variant="ghost" className="w-full justify-start gap-2">
+                <Users className="h-4 w-4" />
+                Pet Parent
               </Button>
             </Link>
             <Button variant="hero" className="w-full mt-2">
