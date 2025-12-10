@@ -1,9 +1,15 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Camera, Edit, MapPin, Calendar, Award, Heart, Image, Video, Settings } from "lucide-react";
+import { toast } from "sonner";
 
 const MILESTONES = [
   { id: 1, title: "First Birthday", date: "March 15, 2021", icon: "🎂" },
@@ -22,6 +28,18 @@ const PHOTOS = [
 ];
 
 const Profile = () => {
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [petName, setPetName] = useState("Finn");
+  const [petBreed, setPetBreed] = useState("Australian Shepherd");
+  const [petAge, setPetAge] = useState("4");
+  const [petBio, setPetBio] = useState("");
+  const [traits, setTraits] = useState(["Playful", "Energetic", "Snow Lover", "Zoomie King"]);
+
+  const handleSaveProfile = () => {
+    toast.success("Profile updated successfully!");
+    setIsEditDialogOpen(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -52,13 +70,13 @@ const Profile = () => {
               {/* Pet Info */}
               <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-3xl font-extrabold">Finn</h1>
+                  <h1 className="text-3xl font-extrabold">{petName}</h1>
                   <Badge variant="secondary" className="rounded-full">Dog</Badge>
                 </div>
-                <p className="text-muted-foreground mt-1">Australian Shepherd · 4 years old</p>
+                <p className="text-muted-foreground mt-1">{petBreed} · {petAge} years old</p>
                 
                 <div className="flex flex-wrap gap-2 mt-3">
-                  {["Playful", "Energetic", "Snow Lover", "Zoomie King"].map((trait) => (
+                  {traits.map((trait) => (
                     <Badge key={trait} className="bg-primary/10 text-primary border-0 rounded-full">
                       {trait}
                     </Badge>
@@ -68,7 +86,7 @@ const Profile = () => {
 
               {/* Actions */}
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" onClick={() => setIsEditDialogOpen(true)}>
                   <Edit className="h-4 w-4 mr-2" />
                   Edit Profile
                 </Button>
@@ -190,6 +208,66 @@ const Profile = () => {
         </section>
       </main>
       <Footer />
+
+      {/* Edit Profile Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Pet Profile</DialogTitle>
+            <DialogDescription>
+              Update your pet's information below.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="petName">Pet Name</Label>
+              <Input
+                id="petName"
+                value={petName}
+                onChange={(e) => setPetName(e.target.value)}
+                placeholder="Enter pet name"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="petBreed">Breed</Label>
+              <Input
+                id="petBreed"
+                value={petBreed}
+                onChange={(e) => setPetBreed(e.target.value)}
+                placeholder="Enter breed"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="petAge">Age (years)</Label>
+              <Input
+                id="petAge"
+                type="number"
+                value={petAge}
+                onChange={(e) => setPetAge(e.target.value)}
+                placeholder="Enter age"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="petBio">Bio</Label>
+              <Textarea
+                id="petBio"
+                value={petBio}
+                onChange={(e) => setPetBio(e.target.value)}
+                placeholder="Tell us about your pet..."
+                rows={3}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveProfile}>
+              Save Changes
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

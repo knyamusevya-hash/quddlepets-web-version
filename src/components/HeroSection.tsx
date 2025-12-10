@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Heart, Camera, Trophy, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative overflow-hidden gradient-hero py-16 md:py-24">
       {/* Decorative elements */}
@@ -37,11 +40,11 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap justify-center gap-4 animate-fade-up" style={{ animationDelay: "300ms" }}>
-            <Button variant="warm" size="xl" className="shadow-elevated">
+            <Button variant="warm" size="xl" className="shadow-elevated" onClick={() => navigate("/profile")}>
               <Camera className="mr-2 h-5 w-5" />
               Create Pet Profile
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+            <Button variant="outline" size="xl" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" onClick={() => navigate("/explore")}>
               Explore Pets
             </Button>
           </div>
